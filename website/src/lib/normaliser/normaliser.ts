@@ -4,7 +4,7 @@ import { normalizeAnnotations } from './annotation';
 import { normalizeContraction } from './contraction';
 import { normalizeDiacritics } from './diacritic';
 import { normalizeInterjections } from './interjection';
-import { normaliseNumbers } from './number/number.normaliser';
+import { normaliseNumbers } from './numbers';
 import { normalizeSpelling } from './spelling';
 import { isSymbolExpression, normalizeSymbol } from './symbol';
 
