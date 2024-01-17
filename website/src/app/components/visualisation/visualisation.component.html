@@ -1,0 +1,10 @@
+<ng-container *ngrxLet="route$ as route">
+  @for (element of route; track element; let i=$index; let first=$first; let
+  last=$last) {
+  <app-route-element
+    [element]="element"
+    [prev]="first ? null : route[i - 1]"
+    [next]="last ? null : route[i + 1]"
+  ></app-route-element>
+  }
+</ng-container>

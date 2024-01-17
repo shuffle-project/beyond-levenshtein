@@ -1,0 +1,142 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$website-primary: mat.define-palette(mat.$blue-palette);
+$website-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$website-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$website-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $website-primary,
+      accent: $website-accent,
+      warn: $website-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($website-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Arial, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-card-title {
+  --mat-card-title-text-size: 1.25rem;
+  --mat-card-title-text-weight: 700;
+}
+
+table {
+  margin: 6px;
+  border-collapse: collapse;
+
+  tr:nth-child(odd) {
+    background-color: whitesmoke;
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: unset;
+    }
+    tr:nth-child(even) {
+      background-color: whitesmoke;
+    }
+  }
+
+  td,
+  th {
+    padding: 5px;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 300px;
+  margin: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px;
+
+  h3 {
+    margin: 8px;
+  }
+
+  h4 {
+    text-align: center;
+    width: 100%;
+    margin: 0.75rem 0;
+  }
+}
+
+.card.no-border {
+  border: none;
+}
+
+.mdc-tooltip {
+  white-space: pre-line;
+  .mdc-tooltip__surface {
+    text-align: left;
+  }
+}
+
+:root {
+  --color-red: #ef5350;
+  --color-pink: #ec407a;
+  --color-purple: #ab47bc;
+  --color-deep-purple: #7e57c2;
+  --color-indigo: #5c6bc0;
+  --color-blue: #42a5f5;
+  --color-light-blue: #29b6f6;
+  --color-cyan: #26c6da;
+  --color-teal: #26a69a;
+  --color-green: #66bb6a;
+  --color-light-green: #9ccc65;
+  --color-lime: #c0ca33;
+  --color-yellow: #fdd835;
+  --color-amber: #ffca28;
+  --color-orange: #ffa726;
+  --color-deep-orange: #ff7043;
+
+  --color-red-rgb: 239, 83, 80;
+  --color-pink-rgb: 236, 64, 122;
+  --color-purple-rgb: 171, 71, 188;
+  --color-deep-purple-rgb: 126, 87, 194;
+  --color-indigo-rgb: 92, 107, 192;
+  --color-blue-rgb: 66, 165, 245;
+  --color-light-blue-rgb: 41, 182, 246;
+  --color-cyan-rgb: 38, 198, 218;
+  --color-teal-rgb: 38, 166, 154;
+  --color-green-rgb: 102, 187, 106;
+  --color-light-green-rgb: 156, 204, 101;
+  --color-lime-rgb: 192, 202, 51;
+  --color-yellow-rgb: 253, 216, 53;
+  --color-amber-rgb: 255, 202, 40;
+  --color-orange-rgb: 255, 167, 38;
+  --color-deep-orange-rgb: 255, 112, 67;
+}

@@ -1,0 +1,76 @@
+<form [formGroup]="formGroup">
+  <div class="toolbar">
+    <div class="controls">
+      <mat-form-field>
+        <mat-label>Examples</mat-label>
+        <mat-select [formControl]="exampleSelect">
+          <mat-select-trigger>
+            {{ exampleSelect.value.id }}
+          </mat-select-trigger>
+          <mat-option *ngFor="let example of examples" [value]="example">
+            <div class="col">
+              <span class="example-id">
+                {{ example.id }}
+              </span>
+              <span class="example-dataset">{{ example.dataset }}</span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Normalisations</mat-label>
+        <mat-select formControlName="normalisations" multiple="true">
+          <mat-option
+            *ngFor="let option of normalisationOptions"
+            [value]="option"
+          >
+            {{ option[0].toUpperCase() + option.slice(1) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Display</mat-label>
+        <mat-select [formControl]="displayOptionsControl" multiple="true">
+          <mat-option *ngFor="let option of displayOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="card">
+        <h3>Ground Truth</h3>
+        <textarea matInput formControlName="groundTruth"></textarea>
+      </div>
+
+      <div class="card">
+        <h3>Hypothesis</h3>
+        <textarea matInput formControlName="hypothesis"></textarea>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h3>Difference</h3>
+          <mat-spinner
+            *ngIf="loading"
+            diameter="24"
+            strokeWidth="2"
+          ></mat-spinner>
+        </div>
+        <app-visualisation></app-visualisation>
+      </div>
+    </div>
+
+    <div class="container analysis">
+      <app-error-rate></app-error-rate>
+      <app-word-errors></app-word-errors>
+      <app-word-substitutions></app-word-substitutions>
+      <app-normalisations></app-normalisations>
+    </div>
+  </div>
+</form>

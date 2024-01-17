@@ -1,0 +1,12 @@
+<span *ngIf="before" class="before" [innerHTML]="before"></span>
+<div
+  [matTooltip]="tooltip ? getTooltipText() : ''"
+  [matTooltipPosition]="'above'"
+>
+  @for ( item of parts; track $index) {
+  <span [ngClass]="item.cssClass">
+    {{ item.text }}
+  </span>
+  }
+</div>
+<span *ngIf="after" class="after" [innerHTML]="after"></span>
