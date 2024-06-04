@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'outline' },
     },
+    provideCharts(withDefaultRegisterables()),
   ],
 };
