@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:pages": "ng build --base-href /beyond-levenshtein/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:numbers": "jest src/lib/**/*.spec.ts"
