@@ -11,16 +11,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.0.0",
+    "@angular/animations": "^18.0.1",
     "@angular/cdk": "^17.0.2",
-    "@angular/common": "^17.0.0",
-    "@angular/compiler": "^17.0.0",
-    "@angular/core": "^17.0.0",
-    "@angular/forms": "^17.0.0",
+    "@angular/common": "^18.0.1",
+    "@angular/compiler": "^18.0.1",
+    "@angular/core": "^18.0.1",
+    "@angular/forms": "^18.0.1",
     "@angular/material": "^17.0.2",
-    "@angular/platform-browser": "^17.0.0",
-    "@angular/platform-browser-dynamic": "^17.0.0",
-    "@angular/router": "^17.0.0",
+    "@angular/platform-browser": "^18.0.1",
+    "@angular/platform-browser-dynamic": "^18.0.1",
+    "@angular/router": "^18.0.1",
     "@ngrx/component": "^17.0.1",
     "chart.js": "^4.3.0",
     "fraction.js": "^4.3.7",
@@ -32,9 +32,9 @@
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.0.5",
-    "@angular/cli": "^17.0.5",
-    "@angular/compiler-cli": "^17.0.0",
+    "@angular-devkit/build-angular": "^18.0.2",
+    "@angular/cli": "^18.0.2",
+    "@angular/compiler-cli": "^18.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/number-to-words": "^1.2.3",
     "@types/uuid": "^9.0.7",
@@ -45,6 +45,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "tsx": "^4.6.2",
-    "typescript": "~5.2.2"
+    "typescript": "~5.4.5"
   }
 }

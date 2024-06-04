@@ -18,12 +18,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom"],
-    "baseUrl": ".",
-    "paths": {
-      "*": ["src/*"]
-    },
-    "skipLibCheck": true
+    "lib": ["ES2022", "dom"]
   },
   "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
