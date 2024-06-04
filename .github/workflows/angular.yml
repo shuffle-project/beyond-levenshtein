@@ -32,13 +32,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: cd website && npm install
+        run: cd website && npm ci
       - name: Build
         run: cd website && npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./website/dist/website
+          path: ./website/dist/website/browser
 
   # Deployment job
   deploy:
