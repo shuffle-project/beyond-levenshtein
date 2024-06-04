@@ -1753,7 +1753,7 @@ for (const key of Object.keys(WORDS)) {
 }
 
 export const normalizeSpelling = (value: string): string => {
-  if (Object.hasOwn(SPELLINGS, 'constructor')) {
+  if (Object.hasOwn(SPELLINGS, value)) {
     return SPELLINGS[value];
   }
   return value;

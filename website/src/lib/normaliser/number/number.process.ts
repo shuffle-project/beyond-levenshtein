@@ -8,6 +8,7 @@ import {
   PREFIXES,
   TENS,
   TENS_SUFFIXED,
+  ZEROS,
 } from './number.constants';
 import {
   isFloat,
@@ -60,8 +61,11 @@ class CurrentNumber {
       }
     }
 
-    if (value === 'point' && this.hasFloat()) {
-      return false;
+    if (value === 'point') {
+      if (this.hasFloat()) {
+        return false;
+      }
+      return true;
     }
 
     if (isSuffixed(value) && this.hasSuffix()) {
@@ -69,53 +73,23 @@ class CurrentNumber {
     }
 
     if (isNumericWord(value)) {
-      if (Object.keys(ONES).includes(value)) {
-        if (this.hasFloat()) {
-          return true;
-        }
+      return true;
+      // if (Object.keys(ONES).includes(value)) {
+      //   if (this.hasFloat()) {
+      //     return true;
+      //   }
 
-        if (
-          isNumeric(prev.value) &&
-          prev.value[prev.value.length - 1] !== '0'
-        ) {
-        } else if (Object.keys(ONES).includes(prev.value.toLowerCase())) {
-          return false;
-        }
-      }
+      //   if (
+      //     isNumeric(prev.value) &&
+      //     prev.value[prev.value.length - 1] !== '0'
+      //   ) {
+      //   } else if (Object.keys(ONES).includes(prev.value.toLowerCase())) {
+      //     return false;
+      //   }
+      // }
     }
 
     return true;
-  }
-
-  private addOne(value: string, one: number): string {
-    if (!value.length) {
-      return one.toString();
-    }
-
-    if (one < 10) {
-      return value.slice(0, -1) + one;
-    }
-
-    if (value.slice(-2) === '00') {
-      return value.slice(0, -2) + one;
-    }
-
-    return value + one;
-  }
-
-  private addTen(value: string, ten: number): string {
-    if (value.slice(-2) === '00') {
-      return value.slice(0, -2) + ten;
-    } else {
-      return value + ten;
-    }
-  }
-
-  private multiply(value: string, multiplier: number): string {
-    if (value.length === 0) {
-      return multiplier.toString();
-    }
-    return value + multiplier.toString().slice(1);
   }
 
   getMergedToken(): Token {
@@ -125,24 +99,112 @@ class CurrentNumber {
     let decimals = '';
     let suffix = '';
 
-    const addOne = (one: number) => {
+    const addZero = (zero: number) => {
       if (decimalsStarted) {
-        decimals += one;
+        decimals += zero;
       } else {
-        integers = this.addOne(integers, one);
+        integers += zero;
       }
     };
 
-    const addTen = (ten: number) => {
-      if (decimalsStarted) {
-        decimals = this.addTen(decimals, ten);
+    const addOne = (one: number, prev: string | null) => {
+      let append = false;
+      let value = decimalsStarted ? decimals : integers;
+
+      if (!prev || value === '') {
+        append = true;
+      } else if (
+        Object.keys(ONES).includes(prev) ||
+        Object.keys(ZEROS).includes(prev)
+      ) {
+        append = true;
+      } else if (one < 10) {
+        // 1 - 9
+        if (
+          Object.keys(TENS).includes(prev!) ||
+          Object.keys(MULTIPLIERS).includes(prev!)
+        ) {
+          append = false;
+        } else {
+          append = true;
+        }
       } else {
-        integers = this.addTen(integers, ten);
+        // 10 - 19
+        if (value.slice(-2) === '00') {
+          append = false;
+        } else {
+          append = true;
+        }
+      }
+
+      if (append) {
+        value += one;
+      } else {
+        value = value.slice(0, one < 10 ? -1 : -2) + one;
+      }
+
+      if (decimalsStarted) {
+        decimals = value;
+      } else {
+        integers = value;
+      }
+    };
+
+    const addTen = (ten: number, prev: string | null) => {
+      let append = false;
+      let value = decimalsStarted ? decimals : integers;
+
+      if (!prev || value === '') {
+        append = true;
+      } else if (
+        Object.keys(TENS).includes(prev) ||
+        Object.keys(ONES).includes(prev) ||
+        Object.keys(ZEROS).includes(prev)
+      ) {
+        append = true;
+      } else if (value.slice(-2) === '00') {
+        append = false;
+      } else {
+        append = true;
+      }
+
+      if (append) {
+        value += ten;
+      } else {
+        value = value.slice(0, -2) + ten;
+      }
+
+      if (decimalsStarted) {
+        decimals = value;
+      } else {
+        integers = value;
       }
     };
 
     const multiply = (multiplier: number) => {
-      if (decimalsStarted) {
+      // multiplier = self.multipliers[current]
+      // if value is None:
+      //     value = multiplier
+      // elif isinstance(value, str) or value == 0:
+      //     f = to_fraction(value)
+      //     p = f * multiplier if f is not None else None
+      //     if f is not None and p.denominator == 1:
+      //         value = p.numerator
+      //     else:
+      //         yield output(value)
+      //         value = multiplier
+      // else:
+      //     before = value // 1000 * 1000
+      //     residual = value % 1000
+      //     value = before + residual * multiplier
+
+      if (!integers && !decimals) {
+        if (decimalsStarted) {
+          decimals += multiplier;
+        } else {
+          integers += multiplier;
+        }
+      } else if (decimalsStarted) {
         integers =
           integers +
           decimals +
@@ -150,29 +212,30 @@ class CurrentNumber {
         decimalsStarted = false;
         decimals = '';
       } else {
-        integers = this.multiply(integers, multiplier);
+        integers += multiplier.toString().slice(1);
       }
     };
 
-    for (const token of this.tokens) {
-      if (isNumeric(token.value)) {
-        if (isFloat(token.value)) {
+    const values = this.tokens.map((o) => o.value.toLowerCase());
+    for (let i = 0; i < values.length; i++) {
+      const value = values[i];
+      const prev = i > 0 ? values[i - 1] : null;
+      if (isNumeric(value)) {
+        if (isFloat(value)) {
           if (decimalsStarted) {
             throw new Error('should never happen');
           }
-          [integers, decimals] = token.value.split('.');
+          [integers, decimals] = value.split('.');
           decimalsStarted = true;
         } else {
           if (decimalsStarted) {
-            decimals += token.value;
+            decimals += value;
           } else {
-            integers += token.value;
+            integers += value;
           }
         }
         continue;
       }
-
-      const value = token.value.toLowerCase();
 
       if (isPrefix(value)) {
         prefix = PREFIXES[value];
@@ -181,14 +244,23 @@ class CurrentNumber {
 
       if (isSpecial(value)) {
         switch (value) {
-          case 'and':
+          case 'and': {
             continue;
-          case 'point':
+          }
+          case 'point': {
             decimalsStarted = true;
             continue;
+          }
           case 'double':
-          case 'triple':
+          case 'triple': {
+            if (values.length === i - 1) {
+              throw Error('Should never happen');
+            }
+            const next = values[i + 1];
+            const insert = value === 'double' ? [next] : [next, next];
+            values.splice(i + 1, 0, ...insert);
             continue;
+          }
         }
       }
 
@@ -196,14 +268,14 @@ class CurrentNumber {
         if (Object.keys(ONES_SUFFIXED).includes(value)) {
           const one = ONES_SUFFIXED[value];
           suffix = one[1];
-          addOne(one[0]);
+          addOne(one[0], prev);
           continue;
         }
 
         if (Object.keys(TENS_SUFFIXED).includes(value)) {
           const ten = TENS_SUFFIXED[value];
           suffix = ten[1];
-          addTen(ten[0]);
+          addTen(ten[0], prev);
           continue;
         }
 
@@ -217,13 +289,18 @@ class CurrentNumber {
         throw new Error('what');
       }
 
+      if (Object.keys(ZEROS).includes(value)) {
+        addZero(0);
+        continue;
+      }
+
       if (Object.keys(ONES).includes(value)) {
-        addOne(ONES[value]);
+        addOne(ONES[value], prev);
         continue;
       }
 
       if (Object.keys(TENS).includes(value)) {
-        addTen(TENS[value]);
+        addTen(TENS[value], prev);
         continue;
       }
 

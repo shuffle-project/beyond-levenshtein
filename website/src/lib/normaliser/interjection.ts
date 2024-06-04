@@ -2,7 +2,7 @@
 
 import { Token, TokenName, TokenNormalisation } from '../interfaces';
 
-export const INTERJECTIONS = ['hmm', 'mm', 'mhm', 'mmm', 'uh', 'um'];
+export const INTERJECTIONS = ['hmm', 'mm', 'mhm', 'mmm', 'uh', 'um', 'mm-hm'];
 
 const isInterjection = (value: string): boolean => {
   return INTERJECTIONS.includes(value.toLowerCase());

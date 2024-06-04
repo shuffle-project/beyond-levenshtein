@@ -40,6 +40,7 @@ export class DisplayService {
     'Prefixes',
     'Stemmers',
     'Suffixes',
+    'Affixes',
   ];
   public selectedDisplayOptions$ = new BehaviorSubject<string[]>([
     ...this.displayOptions,

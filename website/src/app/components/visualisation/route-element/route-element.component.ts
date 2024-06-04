@@ -12,6 +12,10 @@ import {
 } from '../../../../lib';
 import { DisplayService } from '../../../services/display.service';
 
+interface Part {
+  text: string;
+  cssClass: string;
+}
 @Component({
   selector: 'app-route-element',
   standalone: true,
@@ -29,7 +33,7 @@ export class RouteElementComponent implements OnInit, OnDestroy {
   public before!: SafeHtml;
   public after!: SafeHtml;
   public tooltip: boolean = false;
-  public parts: Array<{ text: string; cssClass: string }> = [];
+  public parts: Part[] = [];
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -113,7 +117,7 @@ export class RouteElementComponent implements OnInit, OnDestroy {
         after = this.element.ref.after;
         this.parts.push({
           text: this.element.ref.value,
-          cssClass: 'ins', // For visualisation this is an addition to the hypothesis
+          cssClass: 'del', // For visualisation this is an addition to the hypothesis
         });
         break;
       }
@@ -122,7 +126,7 @@ export class RouteElementComponent implements OnInit, OnDestroy {
         after = this.element.hyp.after;
         this.parts.push({
           text: this.element.hyp.value,
-          cssClass: 'del', // For visualisation this is an deletion of the hypothesis
+          cssClass: 'ins', // For visualisation this is an deletion of the hypothesis
         });
         break;
       }
@@ -182,7 +186,64 @@ export class RouteElementComponent implements OnInit, OnDestroy {
             for (let i = 0; i < text.length; i++) {
               this.parts.push({
                 text: text[i],
-                cssClass: i < stemmer.length ? cssClass : `${cssClass} suffix`,
+                cssClass:
+                  i < stemmer.length ? cssClass : `${cssClass} highlight`,
+              });
+            }
+            break;
+          }
+          case SubstitutionName.PREFIX: {
+            const cssClass = this.displayService.isOptionSelected('prefixes')
+              ? 'sub prefix'
+              : 'ok';
+
+            const text = this.element.ref.value;
+            const prefixLength = text.length - this.element.hyp.value.length;
+
+            for (let i = 0; i < text.length; i++) {
+              this.parts.push({
+                text: text[i],
+                cssClass:
+                  i < prefixLength ? `${cssClass} highlight` : `${cssClass}`,
+              });
+            }
+            break;
+          }
+          case SubstitutionName.SUFFIX: {
+            const cssClass = this.displayService.isOptionSelected('suffixes')
+              ? 'sub suffix'
+              : 'ok';
+
+            const text = this.element.ref.value;
+
+            for (let i = 0; i < text.length; i++) {
+              this.parts.push({
+                text: text[i],
+                cssClass:
+                  i < this.element.hyp.value.length
+                    ? `${cssClass}`
+                    : `${cssClass} highlight`,
+              });
+            }
+            break;
+          }
+          case SubstitutionName.AFFIX: {
+            const cssClass = this.displayService.isOptionSelected('affixes')
+              ? 'sub affix'
+              : 'ok';
+
+            const text = this.element.ref.value;
+
+            const start = text.indexOf(this.element.hyp.value);
+            console.log(start);
+
+            for (let i = 0; i < text.length; i++) {
+              this.parts.push({
+                text: text[i],
+                cssClass:
+                  i >= start && i < start + this.element.hyp.value.length
+                    ? `${cssClass}`
+                    : `${cssClass} highlight`,
               });
             }
             break;

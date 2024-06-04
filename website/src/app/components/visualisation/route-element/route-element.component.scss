@@ -41,11 +41,14 @@ span:not(.before):not(.after) {
     border-bottom: 2px solid var(--color-blue);
   }
 
+  &.prefix,
+  &.suffix,
+  &.affix,
   &.stemmer {
     font-weight: 400;
     color: unset;
     border-bottom: 2px solid var(--color-indigo);
-    &.suffix {
+    &.highlight {
       font-weight: 700;
       color: var(--color-blue);
     }
@@ -59,4 +62,12 @@ span:not(.before):not(.after) {
   &.transposition {
     color: yellow;
   }
+}
+
+.badge {
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 0.7rem;
 }

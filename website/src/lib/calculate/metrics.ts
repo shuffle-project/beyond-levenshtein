@@ -3,15 +3,21 @@ import { Metrics, Punctuation, Words } from '../interfaces';
 const f1Score = (ok: number, sub: number, del: number, ins: number): number => {
   // precision is the number of true positive results divided by the number of all positive results, including those not identified correctly,
   const n_hyp = ok + sub + ins;
+
+  // recall is the number of true positive results divided by the number of all samples that should have been identified as positive.
+  const n_ref = ok + sub + del;
+
+  if (n_hyp === 0 && n_ref === 0) {
+    return 1;
+  }
+
   if (n_hyp === 0) {
     return 0;
   }
   const precision = ok / n_hyp;
 
-  // recall is the number of true positive results divided by the number of all samples that should have been identified as positive.
-  const n_ref = ok + sub + del;
   if (n_ref === 0) {
-    return 1;
+    return 0;
   }
   const recall = ok / n_ref;
 

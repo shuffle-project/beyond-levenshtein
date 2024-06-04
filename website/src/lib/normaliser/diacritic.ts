@@ -35,7 +35,7 @@ export const normalizeDiacritics = (value: string): string => {
   return Array.from(value)
     .map((o) => {
       const c = o.normalize('NFKD');
-      if (Object.hasOwn(ADDITIONAL_DIACRITICS, c)) {
+      if (Object.hasOwn(ADDITIONAL_DIACRITICS_NORMALIZED, c)) {
         return ADDITIONAL_DIACRITICS_NORMALIZED[c];
       }
       return c;

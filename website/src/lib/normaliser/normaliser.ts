@@ -146,7 +146,11 @@ export const normalizeTokens = (tokens: Token[], options: Options): Token[] => {
   // Remove duplicate normalisations per token
   for (const token of result) {
     if (token.normalisations.length) {
-      token.normalisations = [...new Set(token.normalisations)];
+      if (token.value === token.rawValue) {
+        token.normalisations = [];
+      } else {
+        token.normalisations = [...new Set(token.normalisations)];
+      }
     }
   }
 

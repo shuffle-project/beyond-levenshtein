@@ -1,4 +1,4 @@
-const ZEROS: { [key: string]: number } = {
+export const ZEROS: { [key: string]: number } = {
   o: 0,
   oh: 0,
   zero: 0,

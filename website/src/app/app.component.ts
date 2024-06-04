@@ -117,8 +117,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.displayService.setOptions(options);
       });
 
-    // this.addTestExamples();
-
     this.exampleSelect.setValue(this.examples[0]);
 
     this.formGroup
@@ -127,31 +125,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.formGroup
       .get('hypothesis')
       ?.setValue(this.exampleSelect.value.hypothesis);
-
-    // this.formGroup
-    //   .get('groundTruth')
-    //   ?.setValue(`ice cream, everything or state-of-the-art`);
-    // this.formGroup
-    //   .get('hypothesis')
-    //   ?.setValue(`icecream, every thing or state of the art`);
   }
 
   ngOnDestroy(): void {
     this.destroy$$.next();
-  }
-
-  addTestExamples() {
-    this.examples.splice(
-      0,
-      0,
-      ...[
-        {
-          id: 'test',
-          dataset: 'test',
-          groundTruth: `current-events-bronze`,
-          hypothesis: `current events, bronze`,
-        },
-      ]
-    );
   }
 }

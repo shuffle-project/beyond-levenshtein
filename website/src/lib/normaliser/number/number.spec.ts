@@ -23,15 +23,15 @@ const expect = (value: string, toEqual: string[]) => {
 // expect('oh dear', ['oh ', 'dear']);
 // expect('1.2.3', ['1.2.3']); // TODO
 
-// // Written numbers
+// Written numbers
 // expect('two', ['2']);
 // expect('thirty one', ['31']);
 // expect('five twenty four', ['524']);
 // expect('nineteen ninety nine', ['1999']);
 // expect('twenty nineteen', ['2019']);
 // expect('three thousand twenty nine', ['3029']);
-// // expect('forty three thousand two hundred sixty', ['43260']); // TODO
-// // expect('forty three thousand two hundred and sixty', ['43260']); // TODO
+// expect('forty three thousand two hundred sixty', ['43260']); // TODO
+// expect('forty three thousand two hundred and sixty', ['43260']); // TODO
 // expect('two thousand eight two', ['2008 ', '2']);
 // expect('two point five million', ['2500000']);
 // expect('200 thousand', ['200000']);
@@ -47,7 +47,7 @@ const expect = (value: string, toEqual: string[]) => {
 // expect('10 th', ['10th']); // TODO
 // expect('millions', ['1000000s']);
 
-// // Numerals
+// Numerals
 // expect('1,600', ['1600']);
 // expect('1,600.60', ['1600.60']);
 // expect('1,600,60', ['1600', ',', '60']);
@@ -87,13 +87,13 @@ const expect = (value: string, toEqual: string[]) => {
 // expect('fourteen point 4', ['14.4']);
 // expect('four point two billions', ['4200000000s']);
 
-// // Doubles
-// expect('two double o eight', ['2008']);// TODO
-// expect('double oh seven', ['007']);// TODO
-// expect('double zero seven', ['007']);// TODO
-// expect('nine one one', ['911']);// TODO
-// expect('nine double one', ['911']);// TODO
-// expect('one triple oh one', ['10001']);// TODO
+// Doubles
+expect('two double o eight', ['2008']);
+expect('double oh seven', ['007']);
+expect('double zero seven', ['007']);
+expect('nine one one', ['911']);
+expect('nine double one', ['911']);
+expect('one triple oh one', ['10001']);
 
 // // Dates
 // expect('July third twenty twenty', ['July ', '3rd ', '2020']); // TODO

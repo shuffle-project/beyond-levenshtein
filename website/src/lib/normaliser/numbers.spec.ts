@@ -2,7 +2,6 @@ import { parse } from '../lexer';
 
 const convert = (value: string): string => {
   const tokens = parse(value);
-  console.log(tokens);
   return tokens
     .map((o) => [o.before, o.value, o.after].join(''))
     .join('')
@@ -20,34 +19,34 @@ const compare = (value: string, toBe: string) => {
 
 // compare('two thousand eight two', '2008 2');
 
-// compare('3 14', '3 14');
+compare('3 14', '3 14');
 
-// compare('Nineteen-ninety five', '1995');
-// compare('Nineteen-ninety 5', '1995');
-// compare('oh dear', 'oh dear');
+compare('Nineteen-ninety five', '1995');
+compare('Nineteen-ninety 5', '1995');
+compare('oh dear', 'oh dear');
 
-// compare('1.2.3', '1.2.3');
-// compare('point 89 point 9', '.89 .9');
-// compare('1,600', '1600');
-// compare('1,600.60', '1600.60');
-// compare('1,600,60', '1600,60');
-// compare('1_000_000', '1000000');
+compare('1.2.3', '1.2.3');
+compare('point 89 point 9', '.89 .9');
+compare('1,600', '1600');
+compare('1,600.60', '1600.60');
+compare('1,600,60', '1600,60');
+compare('1_000_000', '1000000');
 
-// compare('two', '2');
-// compare('thirty one', '31');
-// compare('five twenty four', '524');
-// compare('nineteen ninety nine', '1999');
-// compare('twenty nineteen', '2019');
+compare('two', '2');
+compare('thirty one', '31');
+compare('five twenty four', '524');
+compare('nineteen ninety nine', '1999');
+compare('twenty nineteen', '2019');
 
-// compare('two point five million', '2500000');
-// compare('four point two billions', '4200000000s');
-// compare('200 thousand', '200000');
-// compare('200 thousand dollars', '$200000');
-// compare('$20 million', '$20000000');
-// compare('€52.4 million', '€52400000');
-// compare('£77 thousands', '£77000s');
+compare('two point five million', '2500000');
+compare('four point two billions', '4200000000s');
+compare('200 thousand', '200000');
+compare('200 thousand dollars', '$200000');
+compare('$20 million', '$20000000');
+compare('€52.4 million', '€52400000');
+compare('£77 thousands', '£77000s');
 
-// compare('two double o eight', '2008');
+compare('two double o eight', '2008');
 
 compare('three thousand twenty nine', '3029');
 compare('forty three thousand two hundred sixty', '43260');
@@ -98,4 +97,5 @@ compare('10 th', '10th');
 compare('10th', '10th');
 
 compare('one', 'one');
+compare('1', 'one');
 compare('ones', 'ones');

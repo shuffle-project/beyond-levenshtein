@@ -11,8 +11,8 @@ import { createOptions } from './options';
 import { isHomophone, isStemmer } from './talisman';
 
 const WEAK_PENALITY = 1;
-const DEFAULT_PENALITY = 4;
-const STRONG_PENALITY = 8;
+const DEFAULT_PENALITY = 2;
+const STRONG_PENALITY = 4;
 
 const getDeletionPenalty = (r: Token): number => {
   switch (r.name) {
@@ -33,13 +33,18 @@ const getInsertionPenalty = (h: Token): number => {
 };
 
 const getSubstitutionPenalty = (r: Token, h: Token): number => {
+  // Different types
+  if (
+    r.name !== h.name &&
+    ([TokenName.NUMBER, TokenName.PUNCTUATION].includes(r.name) ||
+      [TokenName.NUMBER, TokenName.PUNCTUATION].includes(h.name))
+  ) {
+    return STRONG_PENALITY;
+  }
+
   // Punctuation
-  if (r.name === TokenName.PUNCTUATION || h.name === TokenName.PUNCTUATION) {
-    if (r.name === h.name) {
-      return WEAK_PENALITY;
-    } else {
-      return STRONG_PENALITY;
-    }
+  if (r.name === TokenName.PUNCTUATION && h.name === TokenName.PUNCTUATION) {
+    return WEAK_PENALITY;
   }
 
   // Capitalisation

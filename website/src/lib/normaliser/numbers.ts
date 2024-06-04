@@ -310,16 +310,38 @@ class EnglishNumberNormalizer {
 
           if (ordered.length) {
             const token = joinTokens([curr, next1, and, next3, next4]);
-            const currency = symbolExpressionToCurrencySign(ordered[0].value);
-            const integers = symbolExpressionToCurrencySign(ordered[1].value);
-            const decimals = symbolExpressionToCurrencySign(ordered[3].value);
-            const value = `${integers}.${decimals}`;
+            token.name = TokenName.NUMBER;
+            token.normalisations.push(TokenNormalisation.NUMBER);
+
+            const integers = ordered[1].value;
+            const decimals = ordered[3].value;
+
+            let currency = symbolExpressionToCurrencySign(ordered[0].value);
+            let value = `${integers}.${decimals}`;
             if (value.startsWith('0.')) {
-              token.value = `¢${value.slice(2)}`;
-            } else {
-              token.value = `${currency}${value}`;
+              value = `${value.slice(2)}`;
+              currency = '¢';
             }
-            result.push(token);
+
+            result.push(
+              {
+                ...ordered[0],
+                name: TokenName.SYMBOL,
+                value: currency,
+                normalisations: [TokenNormalisation.SYMBOL],
+                before: curr.before,
+                after: '',
+              },
+              {
+                ...joinTokens([ordered[1], and, ordered[2], ordered[3]]),
+                name: TokenName.NUMBER,
+                value,
+                normalisations: [TokenNormalisation.NUMBER],
+                before: '',
+                after: next4.after,
+              }
+            );
+
             i += 4;
             continue;
           }
@@ -345,15 +367,32 @@ class EnglishNumberNormalizer {
         }
 
         if (ordered.length) {
-          const token = joinTokens([curr, next]);
-          const value = ordered[1].value;
+          let value = ordered[1].value;
+          let currency = symbolExpressionToCurrencySign(ordered[0].value);
           if (value.startsWith('0.')) {
-            token.value = `¢${value.slice(2)}`;
-          } else {
-            const currency = symbolExpressionToCurrencySign(ordered[0].value);
-            token.value = `${currency}${value}`;
+            value = value.slice(2);
+            currency = '¢';
           }
-          result.push(token);
+
+          result.push(
+            {
+              ...ordered[0],
+              name: TokenName.SYMBOL,
+              value: currency,
+              normalisations: [TokenNormalisation.SYMBOL],
+              after: '',
+              before: curr.before,
+            },
+            {
+              ...ordered[1],
+              name: TokenName.NUMBER,
+              value,
+              normalisations: [TokenNormalisation.NUMBER],
+              before: '',
+              after: next.after,
+            }
+          );
+
           i += 1;
           continue;
         }
@@ -363,11 +402,21 @@ class EnglishNumberNormalizer {
       if (i < tokens.length - 1) {
         const next = tokens[i + 1];
         if (curr.name === TokenName.NUMBER && isPercentExpression(next.value)) {
-          const token = {
-            ...joinTokens([curr, next]),
-            value: `${curr.value}%`,
-          };
-          result.push(token);
+          result.push(
+            {
+              ...curr,
+              name: TokenName.NUMBER,
+              normalisations: [TokenNormalisation.NUMBER],
+              after: '',
+            },
+            {
+              ...next,
+              name: TokenName.SYMBOL,
+              value: '%',
+              normalisations: [TokenNormalisation.SYMBOL],
+              before: '',
+            }
+          );
           i += 1;
           continue;
         }
@@ -376,6 +425,9 @@ class EnglishNumberNormalizer {
       // Write out one/s for readability
       if (curr.value === '1' || curr.value === '1s') {
         curr.value = curr.value.replace('1', 'one');
+        if (curr.rawValue !== curr.value) {
+          curr.normalisations.push(TokenNormalisation.NUMBER);
+        }
       }
 
       result.push(curr);
@@ -619,7 +671,7 @@ class EnglishNumberNormalizer {
           const residual: number = value % 1000;
           value = before + residual * multiplier;
         }
-      } else if (Object.hasOwn(this.multipliers, currentValue)) {
+      } else if (Object.hasOwn(this.multipliers_suffixed, currentValue)) {
         mergedTokens.push(current);
         const [multiplier, suffix] = this.multipliers_suffixed[currentValue];
         if (value === null) {
@@ -743,7 +795,7 @@ class EnglishNumberNormalizer {
           if (value !== null) {
             yield output(value);
           }
-          yield output(current.value);
+          yield current;
         }
       } else {
         //all should have been covered at this point
@@ -751,7 +803,7 @@ class EnglishNumberNormalizer {
         if (value !== null) {
           yield output(value);
         }
-        yield output(current.value);
+        yield current;
       }
     }
 

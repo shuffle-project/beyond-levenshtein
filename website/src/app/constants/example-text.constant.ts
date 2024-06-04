@@ -11,7 +11,6 @@ export const EXAMPLE_HYPOTHESIS = [
   `Symbols like €, $, Percent are compared by their written form. Except for symbol number combinations: 100% or $100.`,
   `Diacritics like Ä or ß are unified.`,
   `Numbers and numerical expressions are unified to numbers: first, 2nd, eleven, nineteen ninety nine`,
-  '.',
 ].join('\n');
 
 export const EXAMPLE_GROUND_TRUTH = [
@@ -27,5 +26,4 @@ export const EXAMPLE_GROUND_TRUTH = [
   `Symbols like Euro, dollar, % are compared by their written form. Except for symbol number combinations: 100 percent or 100 dollar.`,
   `Diacritics like Ae or ss are unified.`,
   `Numbers and numerical expressions are unified to numbers: 1st, second, 11, 1999`,
-  '...',
 ].join('\n');
