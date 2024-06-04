@@ -19,10 +19,7 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "lib": ["ES2022", "dom"],
-    "baseUrl": "./",
-    "paths": {
-      "@src/*": ["src/*"]
-    }
+    "baseUrl": "./website"
   },
   "include": ["src/**/*.ts"],
   "angularCompilerOptions": {

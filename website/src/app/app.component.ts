@@ -8,20 +8,20 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
-import { ErrorRateComponent } from '@src/app/components/analysis/error-rate/error-rate.component';
-import { WordErrorsComponent } from '@src/app/components/analysis/word-errors/word-errors.component';
-import { VisualisationComponent } from '@src/app/components/visualisation/visualisation.component';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+import { ErrorRateComponent } from './components/analysis/error-rate/error-rate.component';
+import { WordErrorsComponent } from './components/analysis/word-errors/word-errors.component';
+import { VisualisationComponent } from './components/visualisation/visualisation.component';
 
-import { NormalisationsComponent } from '@src/app/components/analysis/normalisations/normalisations.component';
-import { WordSubstitutionsComponent } from '@src/app/components/analysis/word-substitutions/word-substitutions.component';
+import { NormalisationsComponent } from './components/analysis/normalisations/normalisations.component';
+import { WordSubstitutionsComponent } from './components/analysis/word-substitutions/word-substitutions.component';
 import {
   EXAMPLE_GROUND_TRUTH,
   EXAMPLE_HYPOTHESIS,
-} from '@src/app/constants/example-text.constant';
-import { DATASET_EXAMPLES } from '@src/app/constants/examples';
-import { AppService } from '@src/app/services/app.service';
-import { DisplayService } from '@src/app/services/display.service';
+} from './constants/example-text.constant';
+import { DATASET_EXAMPLES } from './constants/examples';
+import { AppService } from './services/app.service';
+import { DisplayService } from './services/display.service';
 
 interface Example {
   id: string;
