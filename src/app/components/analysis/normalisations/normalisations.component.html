@@ -1,0 +1,16 @@
+<div class="card no-border">
+  <h4>Normalisations</h4>
+
+  <div class="container">
+    <div *ngrxLet="datasets$ as datasets">
+      <canvas
+        baseChart
+        [datasets]="datasets"
+        [labels]="labels"
+        [options]="options"
+        [type]="'doughnut'"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

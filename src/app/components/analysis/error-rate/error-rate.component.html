@@ -1,0 +1,34 @@
+<div class="card no-border">
+  <ng-container *ngrxLet="measures$ as measures">
+    <h4>Analysis</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Error-Rate</th>
+          <th>F1</th>
+          <th>WER</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of measures">
+          <td>
+            <div class="flex col">
+              <span>{{ entry.title }} </span>
+              <span *ngIf="entry.subtitle" class="small">{{
+                entry.subtitle
+              }}</span>
+            </div>
+          </td>
+          <td class="big">{{ entry.errorRate | percent : ".1" }}</td>
+          <td class="big">
+            {{ entry.f1 !== undefined ? (entry.f1 | number : "1.2-2") : "-" }}
+          </td>
+          <td class="big">
+            {{ entry.wer !== undefined ? (entry.wer | percent : ".1") : "-" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>

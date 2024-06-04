@@ -17,10 +17,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-defaults:
-  run:
-    working-directory: website
-
 jobs:
   # Build job
   build:

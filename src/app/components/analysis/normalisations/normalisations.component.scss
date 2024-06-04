@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+
+  div {
+    flex: 1;
+    max-width: 300px;
+    padding-bottom: 1rem;
+  }
+}
