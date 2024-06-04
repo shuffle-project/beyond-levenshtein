@@ -17,6 +17,10 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+defaults:
+  run:
+    working-directory: website
+
 jobs:
   # Build job
   build:
@@ -32,13 +36,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install dependencies
-        run: cd website && npm ci
+        run: npm ci
       - name: Build
-        run: cd website && npm run build
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./website/dist/website/browser
+          path: ./dist/website/browser
 
   # Deployment job
   deploy:
