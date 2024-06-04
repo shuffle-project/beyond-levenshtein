@@ -235,7 +235,6 @@ export class RouteElementComponent implements OnInit, OnDestroy {
             const text = this.element.ref.value;
 
             const start = text.indexOf(this.element.hyp.value);
-            console.log(start);
 
             for (let i = 0; i < text.length; i++) {
               this.parts.push({
