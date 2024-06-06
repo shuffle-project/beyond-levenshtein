@@ -10,7 +10,7 @@ Try out the demo [here](https://shuffle-project.github.io/beyond-levenshtein/) t
 
 or watch the video:
 
-<video src="demo-video.mp4" controls="true" autplay="false" alt="Demo Video of the web application to test the extended Word Error Rate computation"></video>
+[![Watch the video](demo-video.png)](demo-video.mp4)
 
 ## Quickstart
 
