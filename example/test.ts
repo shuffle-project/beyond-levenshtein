@@ -3,10 +3,7 @@ import { Operation, process } from './../src/lib';
 const reference = 'The quick brown fox jumps over the lazy dog.';
 const hypothesis = 'the big brown fox and jumps over lazy dog!';
 
-const result = process(reference, hypothesis, {
-  lowercase: true,
-  removePunctuation: true,
-});
+const result = process(reference, hypothesis);
 
 // Log metrics
 console.log(result.measures);

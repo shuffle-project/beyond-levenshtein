@@ -28,13 +28,27 @@ import { Operation, process } from "./../src/lib";
 const reference = "The quick brown fox jumps over the lazy dog.";
 const hypothesis = "the big brown fox and jumps over lazy dog!";
 
-const result = process(reference, hypothesis, {
-  lowercase: true,
-  removePunctuation: true,
-});
+const result = process(reference, hypothesis);
 
 // Log metrics
 console.log(result.measures);
+
+// Output
+// {
+//   metrics: {
+//     wer: 0.3333333333333333,
+//     mer: 0.3,
+//     wil: 0.3950617283950617,
+//     ier: 0.1111111111111111,
+//     der: 0.1111111111111111,
+//     punctuation: { errorRate: 1, f1Score: NaN },
+//     capitalisation: { errorRate: 1, f1Score: 0 },
+//     numbers: { errorRate: 0, f1Score: 1 }
+//   },
+//   words: { ... },
+//   punctuation: { ... },
+//   normalisations: { ... }
+// }
 
 // Log route
 for (const item of result.route) {
@@ -55,6 +69,19 @@ for (const item of result.route) {
   }
   console.log(message);
 }
+
+// Output
+// SUB: the -> The
+// SUB: big -> quick
+// OK: brown
+// OK: fox
+// INS: and
+// OK: jumps
+// OK: over
+// DEL: the
+// OK: lazy
+// OK: dog
+// SUB: ! -> .
 ```
 
 To execute the typescript file:
