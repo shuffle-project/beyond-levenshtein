@@ -10,7 +10,7 @@ Try out the demo [here](https://shuffle-project.github.io/beyond-levenshtein/) t
 
 or watch the video:
 
-[![Watch the video](demo-video.png)](demo-video.mp4)
+https://github.com/shuffle-project/beyond-levenshtein/assets/22795044/581e1f95-722c-44db-bf18-886b6c3d6f6c
 
 ## Quickstart
 
