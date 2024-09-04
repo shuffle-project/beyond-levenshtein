@@ -19,7 +19,7 @@ const normalize = (
 
   normalized = normalized.replaceAll(/\s\s+/g, ' ');
 
-  return normalized;
+  return normalized.trim();
 };
 
 export const calculateWER = (
