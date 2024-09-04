@@ -2,7 +2,7 @@
 
 This repository contains the demo and implementation of a published paper for the Interspeech2024 conference.
 
-Link to the paper [NOT PUBLISHED YET].
+Link to the [paper](https://doi.org/10.21437/Interspeech.2024-32).
 
 ## Demo
 
@@ -88,4 +88,19 @@ To execute the typescript file:
 
 ```bash
 tsx example/test.ts
+```
+
+## Citation
+
+If you use this in your research, please cite the paper:
+
+```bibtex
+@inproceedings{kuhn24_interspeech,
+  title     = {Beyond Levenshtein: Leveraging Multiple Algorithms for Robust Word Error Rate Computations And Granular Error Classifications},
+  author    = {Korbinian Kuhn and Verena Kersken and Gottfried Zimmermann},
+  year      = {2024},
+  booktitle = {Interspeech 2024},
+  pages     = {4543--4547},
+  doi       = {10.21437/Interspeech.2024-32},
+}
 ```
